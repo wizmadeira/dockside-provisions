@@ -38,7 +38,7 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-2">Email</h3>
-                  <p className="text-white/80 mb-2">provisions@marinesupplypro.com</p>
+                  <p className="text-white/80 mb-2">shipshandler@wizmadeira.com</p>
                   <p className="text-white/60">Quick response guaranteed</p>
                 </div>
               </div>
