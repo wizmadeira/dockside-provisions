@@ -1,24 +1,799 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MarineSupply Pro - Professional Ship Provisioning Services</title>
-    <meta name="description" content="Professional marine supply services for domestic and foreign vessels. Quality food, beverages, and ship provisions delivered worldwide with reliability and excellence." />
-    <meta name="author" content="Lovable" />
+    <meta name="description" content="Professional marine supply services for domestic and foreign vessels. Quality food, beverages, and ship provisions delivered worldwide with reliability and excellence.">
+    <meta name="author" content="WizMadeira">
 
-    <meta property="og:title" content="MarineSupply Pro - Professional Ship Provisioning Services" />
-    <meta property="og:description" content="Professional marine supply services for domestic and foreign vessels. Quality food, beverages, and ship provisions delivered worldwide." />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
+    <meta property="og:title" content="MarineSupply Pro - Professional Ship Provisioning Services">
+    <meta property="og:description" content="Professional marine supply services for domestic and foreign vessels. Quality food, beverages, and ship provisions delivered worldwide.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="https://wizmadeira.com/opengraph-image.png">
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:site" content="@lovable_dev" />
-    <meta name="twitter:image" content="https://lovable.dev/opengraph-image-p98pqg.png" />
-  </head>
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@wizmadeira">
+    <meta name="twitter:image" content="https://wizmadeira.com/opengraph-image.png">
 
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: hsl(210, 100%, 15%);
+            --primary-light: hsl(210, 100%, 25%);
+            --primary-dark: hsl(210, 100%, 8%);
+            --accent: hsl(200, 100%, 40%);
+            --accent-light: hsl(200, 100%, 60%);
+            --background: hsl(0, 0%, 100%);
+            --foreground: hsl(210, 100%, 8%);
+            --muted-foreground: hsl(210, 15%, 45%);
+            --border: hsl(210, 25%, 90%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--foreground);
+            background-color: var(--background);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header */
+        .header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 64px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            padding: 0.5rem;
+            border-radius: 0.5rem;
+            color: white;
+        }
+
+        .logo-text h1 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .logo-text p {
+            font-size: 0.75rem;
+            color: var(--muted-foreground);
+        }
+
+        .nav {
+            display: none;
+            gap: 2rem;
+        }
+
+        .nav a {
+            text-decoration: none;
+            color: var(--foreground);
+            transition: color 0.3s;
+        }
+
+        .nav a:hover {
+            color: var(--primary);
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 0.375rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 10px 30px -10px rgba(33, 150, 243, 0.3);
+        }
+
+        .btn-transparent {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-transparent:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            background-image: url('src/assets/hero-maritime.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .hero-overlay {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            opacity: 0.75;
+        }
+
+        .hero-content {
+            position: relative;
+            padding: 8rem 0;
+            max-width: 48rem;
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: bold;
+            color: white;
+            margin-bottom: 1.5rem;
+            line-height: 1.1;
+        }
+
+        .hero-highlight {
+            background: linear-gradient(to right, var(--accent-light), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 32rem;
+        }
+
+        .hero-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 3rem;
+        }
+
+        .hero-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .stat {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Sections */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            text-align: center;
+            color: var(--muted-foreground);
+            margin-bottom: 4rem;
+            max-width: 48rem;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* Services Grid */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: white;
+            border-radius: 0.5rem;
+            padding: 2rem;
+            box-shadow: 0 4px 20px -2px rgba(33, 150, 243, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: 1px solid var(--border);
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 40px -10px rgba(33, 150, 243, 0.3);
+        }
+
+        .service-icon {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            width: 3rem;
+            height: 3rem;
+            border-radius: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .service-card p {
+            color: var(--muted-foreground);
+            line-height: 1.6;
+        }
+
+        /* Contact Section */
+        .contact {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-light) 100%);
+            color: white;
+        }
+
+        .contact .section-title,
+        .contact .section-subtitle {
+            color: white;
+        }
+
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .contact-item {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            color: white;
+        }
+
+        .contact-item h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-item p {
+            margin-bottom: 0.25rem;
+        }
+
+        .contact-form {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 0.5rem;
+            padding: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: white;
+            font-size: 1rem;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--accent-light);
+            box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.25rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p,
+        .footer-section a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+            line-height: 1.6;
+        }
+
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .nav {
+                display: flex;
+            }
+
+            .hero-buttons {
+                flex-direction: row;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 767px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-stats {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Icons (using Unicode symbols) */
+        .icon-anchor::before { content: "⚓"; }
+        .icon-ship::before { content: "🚢"; }
+        .icon-globe::before { content: "🌍"; }
+        .icon-package::before { content: "📦"; }
+        .icon-truck::before { content: "🚛"; }
+        .icon-shield::before { content: "🛡️"; }
+        .icon-phone::before { content: "📞"; }
+        .icon-mail::before { content: "✉️"; }
+        .icon-map::before { content: "📍"; }
+        .icon-clock::before { content: "🕒"; }
+        .icon-send::before { content: "📤"; }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <span class="icon-anchor"></span>
+                    </div>
+                    <div class="logo-text">
+                        <h1>MarineSupply Pro</h1>
+                        <p>Ship Provisioning Services</p>
+                    </div>
+                </div>
+                
+                <nav class="nav">
+                    <a href="#services">Services</a>
+                    <a href="#about">About</a>
+                    <a href="#capabilities">Capabilities</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+
+                <div>
+                    <a href="#contact" class="btn btn-primary">Get Quote</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 1.5rem;">
+                    <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); padding: 0.5rem; border-radius: 0.5rem; border: 1px solid rgba(255, 255, 255, 0.2);">
+                        <span class="icon-ship" style="color: white;"></span>
+                    </div>
+                    <span style="color: rgba(255, 255, 255, 0.9); font-weight: 500;">Professional Ship Provisioning</span>
+                </div>
+                
+                <h1>
+                    Complete Marine
+                    <span class="hero-highlight">Supply Solutions</span>
+                </h1>
+                
+                <p>
+                    Comprehensive provisioning services for domestic and foreign vessels. 
+                    We deliver quality food, beverages, and essential supplies to ships 
+                    worldwide with reliability and excellence.
+                </p>
+                
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary">
+                        Request Quote
+                        <span>→</span>
+                    </a>
+                    <a href="#services" class="btn btn-transparent">
+                        View Services
+                    </a>
+                </div>
+                
+                <div class="hero-stats">
+                    <div class="stat">
+                        <div class="stat-number">
+                            <span class="icon-globe"></span>
+                            <span>24/7</span>
+                        </div>
+                        <p class="stat-label">Global Service</p>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">
+                            <span class="icon-anchor"></span>
+                            <span>500+</span>
+                        </div>
+                        <p class="stat-label">Ships Served</p>
+                    </div>
+                    <div class="stat">
+                        <div class="stat-number">
+                            <span class="icon-ship"></span>
+                            <span>15+</span>
+                        </div>
+                        <p class="stat-label">Years Experience</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section">
+        <div class="container">
+            <h2 class="section-title">Our Services</h2>
+            <p class="section-subtitle">
+                Complete maritime supply solutions tailored to your vessel's needs. 
+                From fresh provisions to technical supplies, we deliver excellence at every port.
+            </p>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <span class="icon-package"></span>
+                    </div>
+                    <h3>Food & Beverage Supply</h3>
+                    <p>Fresh provisions, frozen goods, beverages, and specialty dietary requirements for crew comfort and nutrition during long voyages.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <span class="icon-truck"></span>
+                    </div>
+                    <h3>Ship Stores & Supplies</h3>
+                    <p>Complete range of ship stores including cleaning supplies, safety equipment, spare parts, and operational materials.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <span class="icon-shield"></span>
+                    </div>
+                    <h3>Quality Assurance</h3>
+                    <p>Rigorous quality control processes ensuring all provisions meet international maritime standards and regulations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section" style="background: linear-gradient(145deg, hsl(0, 0%, 100%) 0%, hsl(210, 25%, 98%) 100%);">
+        <div class="container">
+            <h2 class="section-title">About MarineSupply Pro</h2>
+            <p class="section-subtitle">
+                With over 15 years of experience in maritime provisioning, we understand the unique challenges 
+                of supplying vessels at sea. Our commitment to quality, reliability, and service excellence 
+                makes us the trusted partner for ship operators worldwide.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact">
+        <div class="container">
+            <h2 class="section-title">Ready to Provision Your Vessel?</h2>
+            <p class="section-subtitle">
+                Contact us today for competitive quotes and reliable marine supply services. 
+                Our team is ready to assist with all your provisioning needs.
+            </p>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <span class="icon-phone"></span>
+                        </div>
+                        <div>
+                            <h3>Phone Support</h3>
+                            <p>+1 (555) 123-4567</p>
+                            <p style="color: rgba(255, 255, 255, 0.6);">24/7 Emergency Line</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <span class="icon-mail"></span>
+                        </div>
+                        <div>
+                            <h3>Email</h3>
+                            <p>shipshandler@wizmadeira.com</p>
+                            <p style="color: rgba(255, 255, 255, 0.6);">Quick response guaranteed</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <span class="icon-map"></span>
+                        </div>
+                        <div>
+                            <h3>Location</h3>
+                            <p>Port Industrial District</p>
+                            <p style="color: rgba(255, 255, 255, 0.6);">Major port access worldwide</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
+                            <span class="icon-clock"></span>
+                        </div>
+                        <div>
+                            <h3>Operating Hours</h3>
+                            <p>24/7 Operations</p>
+                            <p style="color: rgba(255, 255, 255, 0.6);">Always available for urgent needs</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem;">Get a Quote</h3>
+                    <form id="quoteForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Vessel Name</label>
+                                <input type="text" name="vesselName" placeholder="Enter vessel name" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Port of Call</label>
+                                <input type="text" name="portOfCall" placeholder="Destination port" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Contact Information</label>
+                            <input type="email" name="email" placeholder="your@email.com" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Provisioning Requirements</label>
+                            <textarea name="requirements" placeholder="Describe your provisioning needs, quantities, and delivery date" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            Send Quote Request
+                            <span class="icon-send"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>MarineSupply Pro</h3>
+                    <p>Professional marine supply services for domestic and foreign vessels worldwide.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <p><a href="#services">Food & Beverage Supply</a></p>
+                    <p><a href="#services">Ship Stores & Supplies</a></p>
+                    <p><a href="#services">Quality Assurance</a></p>
+                </div>
+                <div class="footer-section">
+                    <h3>Contact</h3>
+                    <p>shipshandler@wizmadeira.com</p>
+                    <p>+1 (555) 123-4567</p>
+                    <p>24/7 Emergency Service</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 MarineSupply Pro. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Form submission
+        document.getElementById('quoteForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData.entries());
+            
+            // Create email body
+            const emailBody = `
+Vessel Name: ${data.vesselName}
+Port of Call: ${data.portOfCall}
+Contact Email: ${data.email}
+Requirements: ${data.requirements}
+            `;
+            
+            // Create mailto link
+            const mailtoLink = `mailto:shipshandler@wizmadeira.com?subject=Quote Request - ${data.vesselName}&body=${encodeURIComponent(emailBody)}`;
+            
+            // Open email client
+            window.location.href = mailtoLink;
+            
+            // Show success message
+            alert('Quote request prepared! Your email client should open now.');
+        });
+
+        // Add scroll effect to header
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 100) {
+                header.style.background = 'rgba(255, 255, 255, 0.98)';
+            } else {
+                header.style.background = 'rgba(255, 255, 255, 0.95)';
+            }
+        });
+    </script>
+</body>
 </html>
