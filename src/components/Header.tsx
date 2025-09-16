@@ -11,7 +11,7 @@ const Header = () => {
               <Anchor className="h-6 w-6 text-white" />
             </div>
             <div>
-              <h1 className="text-xl font-bold text-primary">MarineSupply Pro</h1>
+              <h1 className="text-xl font-bold text-primary">Wizard Ocean Lda</h1>
               <p className="text-xs text-muted-foreground">Ship Provisioning Services</p>
             </div>
           </div>

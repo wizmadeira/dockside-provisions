@@ -11,7 +11,7 @@ const Footer = () => {
                 <Anchor className="h-6 w-6 text-white" />
               </div>
               <div>
-                <h3 className="text-xl font-bold">MarineSupply Pro</h3>
+                <h3 className="text-xl font-bold">Wizard Ocean Lda</h3>
                 <p className="text-white/70 text-sm">Ship Provisioning Services</p>
               </div>
             </div>
@@ -44,7 +44,7 @@ const Footer = () => {
         
         <div className="border-t border-white/20 mt-12 pt-8 text-center">
           <p className="text-white/60">
-            © 2024 MarineSupply Pro. All rights reserved. Professional ship provisioning services worldwide.
+            © 2024 Wizard Ocean Lda. All rights reserved. Professional ship provisioning services worldwide.
           </p>
         </div>
       </div>
