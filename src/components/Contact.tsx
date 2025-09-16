@@ -1,6 +1,6 @@
 import { Button } from "./ui/button";
 import { Card } from "./ui/card";
-import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
+import { Mail, MapPin, Clock, Send } from "lucide-react";
 
 const Contact = () => {
   return (
@@ -21,19 +21,6 @@ const Contact = () => {
             <Card className="p-6 bg-white/10 backdrop-blur-sm border-white/20">
               <div className="flex items-start space-x-4">
                 <div className="bg-white/20 p-3 rounded-lg">
-                  <Phone className="h-6 w-6 text-white" />
-                </div>
-                <div>
-                  <h3 className="text-xl font-semibold text-white mb-2">Phone Support</h3>
-                  <p className="text-white/80 mb-2">+1 (555) 123-4567</p>
-                  <p className="text-white/60">24/7 Emergency Line</p>
-                </div>
-              </div>
-            </Card>
-            
-            <Card className="p-6 bg-white/10 backdrop-blur-sm border-white/20">
-              <div className="flex items-start space-x-4">
-                <div className="bg-white/20 p-3 rounded-lg">
                   <Mail className="h-6 w-6 text-white" />
                 </div>
                 <div>
@@ -51,8 +38,8 @@ const Contact = () => {
                 </div>
                 <div>
                   <h3 className="text-xl font-semibold text-white mb-2">Location</h3>
-                  <p className="text-white/80 mb-2">Port Industrial District</p>
-                  <p className="text-white/60">Major port access worldwide</p>
+                  <p className="text-white/80 mb-2">Porto do Funchal - Ilha da Madeira</p>
+                  <p className="text-white/60">Strategic Atlantic location</p>
                 </div>
               </div>
             </Card>
