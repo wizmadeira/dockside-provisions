@@ -35,7 +35,7 @@ const Footer = () => {
             <h4 className="text-lg font-semibold mb-4">Contact</h4>
             <ul className="space-y-2 text-white/80">
               <li>+1 (555) 123-4567</li>
-              <li>provisions@wizardocean.com</li>
+              <li>shipchandler@wizmadeira.com</li>
               <li>24/7 Emergency Support</li>
               <li>Global Port Coverage</li>
             </ul>
