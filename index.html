@@ -677,6 +677,20 @@
       grid-column: 1 / -1;
     }
 
+    .form-section {
+      grid-column: 1 / -1;
+      margin: 0;
+      border: 0;
+      border-top: 1px solid var(--line);
+      padding: 20px 0 0;
+    }
+
+    .form-section legend {
+      padding: 0;
+      color: var(--navy-950);
+      font-weight: 800;
+    }
+
     label {
       color: var(--navy-950);
       font-weight: 750;
@@ -706,16 +720,95 @@
       box-shadow: 0 0 0 4px rgba(21, 151, 200, 0.18);
     }
 
+    .checkbox-group {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .checkbox-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      min-height: 44px;
+      border: 1px solid #c9d6df;
+      border-radius: 6px;
+      padding: 11px 12px;
+      background: #fff;
+      color: var(--ink);
+      font-weight: 650;
+      cursor: pointer;
+    }
+
+    .checkbox-option input {
+      width: auto;
+      min-height: auto;
+      margin: 5px 0 0;
+      flex: 0 0 auto;
+    }
+
     .form-help {
       margin: 0;
       color: var(--muted);
       font-size: 0.92rem;
     }
 
+    .form-error {
+      margin: 10px 0 0;
+      color: #b42318;
+      font-size: 0.92rem;
+      font-weight: 700;
+    }
+
     .form-status {
       margin: 0;
       color: var(--muted);
       font-size: 0.94rem;
+    }
+
+    .request-summary {
+      border-top: 1px solid var(--line);
+      padding-top: 18px;
+    }
+
+    .request-summary h4 {
+      margin: 0 0 10px;
+      color: var(--navy-950);
+      font-size: 1.02rem;
+    }
+
+    .summary-list {
+      display: grid;
+      grid-template-columns: max-content minmax(0, 1fr);
+      gap: 6px 12px;
+      margin: 0;
+    }
+
+    .summary-list dt {
+      color: var(--muted);
+      font-weight: 750;
+    }
+
+    .summary-list dd {
+      margin: 0;
+      color: var(--ink);
+      overflow-wrap: anywhere;
+    }
+
+    .summary-categories {
+      margin-top: 12px;
+    }
+
+    .summary-categories span {
+      display: block;
+      color: var(--muted);
+      font-weight: 750;
+    }
+
+    .summary-categories ul {
+      margin: 6px 0 0;
+      padding-left: 20px;
+      color: var(--ink);
     }
 
     .site-footer {
@@ -885,6 +978,11 @@
 
       .form-grid {
         grid-template-columns: 1fr;
+      }
+
+      .summary-list {
+        grid-template-columns: 1fr;
+        gap: 2px;
       }
 
       .section {
@@ -1153,8 +1251,8 @@
         </div>
 
         <div class="quote-card">
-          <h3>Provisioning request details</h3>
-          <p class="form-help">Required fields are marked with an asterisk.</p>
+          <h3>Provisioning Request Builder</h3>
+          <p class="form-help">Required fields are marked with an asterisk. Submitting this form will open your email application with the request details prepared.</p>
 
           <form id="quote-form">
             <div class="form-grid">
@@ -1164,12 +1262,17 @@
               </div>
 
               <div class="field">
+                <label for="imo-number">IMO Number</label>
+                <input id="imo-number" name="imoNumber" type="text" inputmode="numeric" autocomplete="off">
+              </div>
+
+              <div class="field">
                 <label for="company">Company</label>
                 <input id="company" name="company" type="text" autocomplete="organization">
               </div>
 
               <div class="field">
-                <label for="email">Email *</label>
+                <label for="email">Contact Email *</label>
                 <input id="email" name="email" type="email" autocomplete="email" required>
               </div>
 
@@ -1188,9 +1291,47 @@
                 <input id="etd" name="etd" type="datetime-local">
               </div>
 
+              <fieldset class="form-section" id="category-group" aria-describedby="category-help category-error">
+                <legend>What do you need?</legend>
+                <p class="form-help" id="category-help">Select at least one provisioning category.</p>
+                <div class="checkbox-group">
+                  <label class="checkbox-option" for="category-food">
+                    <input id="category-food" name="categories" type="checkbox" value="Food & Beverage Supply">
+                    <span>Food & Beverage Supply</span>
+                  </label>
+                  <label class="checkbox-option" for="category-stores">
+                    <input id="category-stores" name="categories" type="checkbox" value="Ship Stores & Supplies">
+                    <span>Ship Stores & Supplies</span>
+                  </label>
+                  <label class="checkbox-option" for="category-coordination">
+                    <input id="category-coordination" name="categories" type="checkbox" value="Supply Coordination">
+                    <span>Supply Coordination</span>
+                  </label>
+                </div>
+                <p class="form-error" id="category-error" aria-live="polite"></p>
+              </fieldset>
+
               <div class="field field-full">
                 <label for="requirements">Provisioning Requirements *</label>
-                <textarea id="requirements" name="requirements" required placeholder="Food, beverages, ship stores, quantities or other relevant details"></textarea>
+                <textarea id="requirements" name="requirements" required placeholder="Include products, quantities, brands or other relevant requirements."></textarea>
+              </div>
+            </div>
+
+            <div class="request-summary" aria-labelledby="request-summary-title" aria-live="polite">
+              <h4 id="request-summary-title">Request Summary</h4>
+              <dl class="summary-list">
+                <dt>Vessel</dt>
+                <dd id="summary-vessel">Not provided</dd>
+                <dt>Port</dt>
+                <dd id="summary-port">Not provided</dd>
+                <dt>ETA</dt>
+                <dd id="summary-eta">Not provided</dd>
+              </dl>
+              <div class="summary-categories">
+                <span>Requested categories:</span>
+                <ul id="summary-categories">
+                  <li>No categories selected</li>
+                </ul>
               </div>
             </div>
 
@@ -1278,35 +1419,120 @@
 
     const quoteForm = document.querySelector("#quote-form");
     const formStatus = document.querySelector("#form-status");
+    const categoryError = document.querySelector("#category-error");
+    const categoryGroup = document.querySelector("#category-group");
+    const categoryInputs = quoteForm ? Array.from(quoteForm.querySelectorAll('input[name="categories"]')) : [];
+    const summaryVessel = document.querySelector("#summary-vessel");
+    const summaryPort = document.querySelector("#summary-port");
+    const summaryEta = document.querySelector("#summary-eta");
+    const summaryCategories = document.querySelector("#summary-categories");
+
+    function formatDateTime(value) {
+      if (!value) return "";
+      const [datePart, timePart = ""] = value.split("T");
+      const [year, month, day] = datePart.split("-");
+      if (!year || !month || !day || !timePart) return value;
+      return `${day}/${month}/${year} ${timePart}`;
+    }
+
+    function renderList(target, items, emptyText) {
+      if (!target) return;
+      target.innerHTML = "";
+      const values = items.length ? items : [emptyText];
+      values.forEach((item) => {
+        const listItem = document.createElement("li");
+        listItem.textContent = item;
+        target.appendChild(listItem);
+      });
+    }
+
+    function getSelectedCategories() {
+      return categoryInputs
+        .filter((input) => input.checked)
+        .map((input) => input.value);
+    }
+
+    function updateRequestSummary() {
+      if (!quoteForm) return;
+      const formData = new FormData(quoteForm);
+      const getValue = (name) => String(formData.get(name) || "").trim();
+
+      if (summaryVessel) summaryVessel.textContent = getValue("vesselName") || "Not provided";
+      if (summaryPort) summaryPort.textContent = getValue("portOfCall") || "Not provided";
+      if (summaryEta) summaryEta.textContent = formatDateTime(getValue("eta")) || "Not provided";
+      renderList(summaryCategories, getSelectedCategories(), "No categories selected");
+    }
 
     if (quoteForm) {
+      quoteForm.addEventListener("input", updateRequestSummary);
+      quoteForm.addEventListener("change", updateRequestSummary);
+
       quoteForm.addEventListener("submit", (event) => {
         event.preventDefault();
 
         const formData = new FormData(quoteForm);
         const getValue = (name) => String(formData.get(name) || "").trim();
         const vesselName = getValue("vesselName");
+        const imoNumber = getValue("imoNumber");
         const company = getValue("company");
         const email = getValue("email");
         const portOfCall = getValue("portOfCall");
-        const eta = getValue("eta");
-        const etd = getValue("etd");
+        const eta = formatDateTime(getValue("eta"));
+        const etd = formatDateTime(getValue("etd"));
         const requirements = getValue("requirements");
-        const subject = `Provisioning Quote Request - ${vesselName || "Madeira"}`;
+        const selectedCategories = getSelectedCategories();
 
-        const emailBody = [
-          "Provisioning Quote Request",
+        if (!quoteForm.reportValidity()) return;
+
+        if (!selectedCategories.length) {
+          if (categoryError) {
+            categoryError.textContent = "Select at least one provisioning category.";
+          }
+
+          if (categoryGroup) {
+            categoryGroup.setAttribute("aria-invalid", "true");
+          }
+
+          categoryInputs[0]?.focus();
+          return;
+        }
+
+        if (categoryError) {
+          categoryError.textContent = "";
+        }
+
+        if (categoryGroup) {
+          categoryGroup.removeAttribute("aria-invalid");
+        }
+
+        const subject = `Provisioning Request - ${vesselName || "Madeira"}`;
+        const emailLines = [
+          "Provisioning Request",
           "",
           `Vessel Name: ${vesselName}`,
-          `Company: ${company}`,
+        ];
+
+        if (imoNumber) emailLines.push(`IMO Number: ${imoNumber}`);
+        if (company) emailLines.push(`Company: ${company}`);
+
+        emailLines.push(
           `Contact Email: ${email}`,
           `Port / Port of Call: ${portOfCall}`,
-          `ETA: ${eta}`,
-          `ETD: ${etd}`,
+        );
+
+        if (eta) emailLines.push(`ETA: ${eta}`);
+        if (etd) emailLines.push(`ETD: ${etd}`);
+
+        emailLines.push(
+          "",
+          "Requested Categories:",
+          ...selectedCategories.map((category) => `- ${category}`),
           "",
           "Provisioning Requirements:",
           requirements,
-        ].join("\n");
+        );
+
+        const emailBody = emailLines.join("\n");
 
         const mailto = `mailto:shipchandler@wizmadeira.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
 
@@ -1316,6 +1542,17 @@
 
         window.location.href = mailto;
       });
+
+      categoryInputs.forEach((input) => {
+        input.addEventListener("change", () => {
+          if (getSelectedCategories().length && categoryError) {
+            categoryError.textContent = "";
+            categoryGroup?.removeAttribute("aria-invalid");
+          }
+        });
+      });
+
+      updateRequestSummary();
     }
   </script>
 </body>
