@@ -1159,8 +1159,8 @@
           <form id="quote-form">
             <div class="form-grid">
               <div class="field">
-                <label for="vessel-name">Vessel Name *</label>
-                <input id="vessel-name" name="vesselName" type="text" autocomplete="organization" required>
+                <label for="vessel-name">Vessel Name</label>
+                <input id="vessel-name" name="vesselName" type="text" autocomplete="organization">
               </div>
 
               <div class="field">
@@ -1284,34 +1284,31 @@
         event.preventDefault();
 
         const formData = new FormData(quoteForm);
-        const data = Object.fromEntries(formData.entries());
-        const subjectParts = ["Provisioning Quote Request"];
-
-        if (data.vesselName) {
-          subjectParts.push(String(data.vesselName));
-        }
-
-        if (data.portOfCall) {
-          subjectParts.push(String(data.portOfCall));
-        }
+        const getValue = (name) => String(formData.get(name) || "").trim();
+        const vesselName = getValue("vesselName");
+        const company = getValue("company");
+        const email = getValue("email");
+        const portOfCall = getValue("portOfCall");
+        const eta = getValue("eta");
+        const etd = getValue("etd");
+        const requirements = getValue("requirements");
+        const subject = `Provisioning Quote Request - ${vesselName || "Madeira"}`;
 
         const emailBody = [
-          "Provisioning quote request",
+          "Provisioning Quote Request",
           "",
-          `Vessel Name: ${data.vesselName || ""}`,
-          `Company: ${data.company || ""}`,
-          `Contact Email: ${data.email || ""}`,
-          `Port / Port of Call: ${data.portOfCall || ""}`,
-          `ETA: ${data.eta || ""}`,
-          `ETD: ${data.etd || ""}`,
+          `Vessel Name: ${vesselName}`,
+          `Company: ${company}`,
+          `Email: ${email}`,
+          `Port / Port of Call: ${portOfCall}`,
+          `ETA: ${eta}`,
+          `ETD: ${etd}`,
           "",
           "Provisioning Requirements:",
-          `${data.requirements || ""}`,
+          requirements,
         ].join("\n");
 
-        const mailto = new URL("mailto:shipchandler@wizmadeira.com");
-        mailto.searchParams.set("subject", subjectParts.join(" - "));
-        mailto.searchParams.set("body", emailBody);
+        const mailto = `mailto:shipchandler@wizmadeira.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
 
         if (formStatus) {
           formStatus.textContent = "Opening your email application with the request details.";
