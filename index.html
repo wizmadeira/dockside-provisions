@@ -1159,8 +1159,8 @@
           <form id="quote-form">
             <div class="form-grid">
               <div class="field">
-                <label for="vessel-name">Vessel Name</label>
-                <input id="vessel-name" name="vesselName" type="text" autocomplete="organization">
+                <label for="vessel-name">Vessel Name *</label>
+                <input id="vessel-name" name="vesselName" type="text" autocomplete="organization" required>
               </div>
 
               <div class="field">
@@ -1299,7 +1299,7 @@
           "",
           `Vessel Name: ${vesselName}`,
           `Company: ${company}`,
-          `Email: ${email}`,
+          `Contact Email: ${email}`,
           `Port / Port of Call: ${portOfCall}`,
           `ETA: ${eta}`,
           `ETD: ${etd}`,
@@ -1314,7 +1314,7 @@
           formStatus.textContent = "Opening your email application with the request details.";
         }
 
-        window.location.href = mailto.toString();
+        window.location.href = mailto;
       });
     }
   </script>
